@@ -1,38 +1,45 @@
-# sv
+[![placemark](https://i.ibb.co/ZzhQHp9x/placemark.png)](logo-placemark)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## Creating a project
+# Placemark Frontend (SvelteKit)
 
-If you're seeing this, you've probably already done this step. Congrats!
+This project is the **frontend implementation** of the Placemark web application, built using **SvelteKit**. It connects to a pre-built Hapi backend from Assignment 1, offering an intuitive, dynamic, and responsive interface for managing placemarks categorized by location and type.
 
-```bash
-# create a new project in the current directory
-npx sv create
+Users can register, log in, add placemarks (with name, description, category, and coordinates), and visualize them on an interactive map.
 
-# create a new project in my-app
-npx sv create my-app
-```
+---
 
-## Developing
+## Features
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### User Accounts
 
-```bash
-npm run dev
+- Sign up, login, logout, and session restoration
+- JWT-based session persistence using localStorage
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Placemark Management
 
-## Building
+- Add, view, and delete placemarks
+- Add and select categories dynamically
+- Input validation and user feedback
+- Sanitation of user input using DOMPurify
 
-To create a production version of your app:
+### Interactive Map
 
-```bash
-npm run build
-```
+- Leaflet integration to display placemarks on a map
+- Popups and auto-centering to latest placemark
+- Checkbox filters to show/hide placemarks by category
 
-You can preview the production build with `npm run preview`.
+### Charts & Reporting
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- Data visualizations with Frappe Charts
+- Includes a **bar chart** for placemarks per category or user
+- Includes a **pie chart** for placemark distribution
+- Geo-data visualizations using Leaflet
+
+---
+
+## Testing & Data Integrity
+
+- Tested against the existing Hapi backend API
+- Runtime validation with TypeScript
+- Structured data flow with reactive `$state` stores
