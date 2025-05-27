@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { loggedInUser, subTitle } from "$lib/runes.svelte";
+  import { loggedInUser, subTitle, currentDataSets } from "$lib/runes.svelte";
   import { placemarkService } from "$lib/services/placemark-service";
   import Card from "$lib/ui/Card.svelte";
   import { onMount } from "svelte";
   import PlacemarkForm from "./PlacemarkForm.svelte";
   import PlacemarkList from "$lib/ui/PlacemarkList.svelte";
+
 
   subTitle.text = "Add and View Placemarks";
 
@@ -29,3 +30,6 @@
     </Card>
   </div>
 </div>
+
+<Chart data={currentDataSets.placemarksByCategory} type="bar" />
+

@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Session, User, Category, Placemark } from "$lib/types/placemark-types"
-import { loggedInUser, currentPlacemarks, currentCategorys } from "$lib/runes.svelte";
+import { loggedInUser, currentPlacemarks, currentCategorys, currentUsers } from "$lib/runes.svelte";
+import { computeByCategory, computeByUser } from "./placemark-utils";
 
 
 export const placemarkService = {
@@ -90,12 +91,32 @@ export const placemarkService = {
     }
   },
 
+  async getUsers(token: string): Promise<User[]> {
+  try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.get(`${this.baseUrl}/api/users`);
+      return response.data;
+    } catch (error) {
+      console.log("Error fetching users:", error);
+      return [];
+    }
+  },
+
+
   async refreshPlacemarkInfo() {
     if (loggedInUser.token) {
       console.log(" Fetching updated placemarks and categorys...");
-      currentPlacemarks.placemarks = await this.getPlacemarks(loggedInUser.token);
+      
       currentCategorys.categorys = await this.getCategorys(loggedInUser.token);
+      currentPlacemarks.placemarks = await this.getPlacemarks(loggedInUser.token);
+      currentUsers.users = await this.getUsers(loggedInUser.token); 
+
+      computeByCategory(currentPlacemarks.placemarks, currentCategorys.categorys);
+      computeByUser(currentPlacemarks.placemarks, currentCategorys.categorys, currentUsers.users);
+
       console.log(" Categories:", currentCategorys.categorys);
+      console.log(" Placemark:", currentPlacemarks.placemarks);
+      console.log(" Users:", currentUsers.users);
     }
   },
 

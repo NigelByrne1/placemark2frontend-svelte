@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loggedInUser, currentCategorys } from "$lib/runes.svelte";
+  import { loggedInUser, currentCategorys, currentUsers } from "$lib/runes.svelte";
   import { placemarkService } from "$lib/services/placemark-service";
   import type { Placemark, Category } from "$lib/types/placemark-types";
   import Coordinates from "$lib/ui/Coordinates.svelte";
@@ -94,6 +94,7 @@
 
   <!-- Category Selection / Creation -->
   <div class="field">
+    <!-- svelte-ignore a11y_label_has_associated_control -->
     <label class="label">Category</label>
 
     <label class="checkbox mb-2">
@@ -120,7 +121,7 @@
 
   <!-- Submit -->
   <div class="field mt-4">
-    <button on:click={addPlacemark} class="button is-danger is-fullwidth">Add Placemark</button>
+    <button onclick={addPlacemark} class="button is-danger is-fullwidth">Add Placemark</button>
   </div>
 
   <!-- Feedback -->
