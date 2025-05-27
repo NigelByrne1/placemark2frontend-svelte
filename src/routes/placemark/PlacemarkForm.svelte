@@ -121,7 +121,7 @@
 
   <!-- Submit -->
   <div class="field mt-4">
-    <button onclick={addPlacemark} class="button is-danger is-fullwidth">Add Placemark</button>
+    <button onclick={addPlacemark} class="button is-success is-fullwidth">Add Placemark</button>
   </div>
 
   <!-- Feedback -->

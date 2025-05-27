@@ -5,6 +5,10 @@
   import { onMount } from "svelte";
   import PlacemarkForm from "./PlacemarkForm.svelte";
   import PlacemarkList from "$lib/ui/PlacemarkList.svelte";
+  // @ts-ignore
+  import Chart from "svelte-frappe-charts";
+
+
 
 
   subTitle.text = "Add and View Placemarks";
@@ -28,8 +32,10 @@
     <Card title="Please Add a Placemark">
       <PlacemarkForm {categoryList} />
     </Card>
+    <Card title="Placemarks by Category">
+      <Chart data={currentDataSets.placemarksByCategory} type="bar" />
+    </Card>
   </div>
 </div>
 
-<Chart data={currentDataSets.placemarksByCategory} type="bar" />
 

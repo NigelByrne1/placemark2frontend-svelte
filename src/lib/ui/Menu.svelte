@@ -2,7 +2,7 @@
   import { loggedInUser } from "$lib/runes.svelte";
 </script>
 
-<nav class="navbar is-full-width is-danger">
+<nav class="navbar is-full-width is-success">
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/placemark">
@@ -13,6 +13,7 @@
     <div id="navbarMenu" class="navbar-menu has-text-white">
       <div class="navbar-end">
         <a class="navbar-item" href="/charts"> Charts </a>
+        <a class="navbar-item" href="/maps"> Maps </a>
         <a class="navbar-item" href="/report"> Report </a>
         <a class="navbar-item" href="/logout"> Logout [{loggedInUser.email}]</a>
       </div>

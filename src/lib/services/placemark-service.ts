@@ -106,14 +106,15 @@ export const placemarkService = {
   async refreshPlacemarkInfo() {
     if (loggedInUser.token) {
       console.log(" Fetching updated placemarks and categorys...");
-      
+      // refresh variables
       currentCategorys.categorys = await this.getCategorys(loggedInUser.token);
       currentPlacemarks.placemarks = await this.getPlacemarks(loggedInUser.token);
       currentUsers.users = await this.getUsers(loggedInUser.token); 
-
+      // refresh arrays for charts
       computeByCategory(currentPlacemarks.placemarks, currentCategorys.categorys);
       computeByUser(currentPlacemarks.placemarks, currentCategorys.categorys, currentUsers.users);
-
+      // computeGeoScatter(currentPlacemarks.placemarks); 
+      // console log variables for diagnositcs 
       console.log(" Categories:", currentCategorys.categorys);
       console.log(" Placemark:", currentPlacemarks.placemarks);
       console.log(" Users:", currentUsers.users);

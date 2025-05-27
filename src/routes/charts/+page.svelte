@@ -5,6 +5,7 @@
   import Chart from "svelte-frappe-charts";
 
   subTitle.text = "Placemark Charts";
+
 </script>
 
 <div class="columns">

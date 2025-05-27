@@ -29,7 +29,7 @@
 </script>
 
 
-<div class="box has-background-danger">
+<div class="box has-background-success">
   {#if message}
     <Message {message} />
   {/if}

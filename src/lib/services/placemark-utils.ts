@@ -1,4 +1,4 @@
-import { currentDataSets } from "$lib/runes.svelte";
+import { currentDataSets,  } from "$lib/runes.svelte";
 import type { Category, Placemark, User } from "$lib/types/placemark-types";
 
 export function computeByCategory(placemarks: Placemark[], categories: Category[]) {
