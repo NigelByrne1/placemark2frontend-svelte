@@ -7,7 +7,7 @@
 
   if (browser) {
     placemarkService.restoreSession(); 
-    const savedLoggedInUser = localStorage.donation;
+    const savedLoggedInUser = localStorage.placemark;
     if (savedLoggedInUser) {
       const session = JSON.parse(savedLoggedInUser);
       loggedInUser.email = session.email;

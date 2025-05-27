@@ -126,11 +126,11 @@ export const placemarkService = {
     loggedInUser.name = session.name;
     loggedInUser.token = session.token;
     loggedInUser._id = session._id;
-    localStorage.donation = JSON.stringify(loggedInUser);
+    localStorage.placemark = JSON.stringify(loggedInUser);
   },
 
   async restoreSession() {
-    const savedLoggedInUser = localStorage.donation;
+    const savedLoggedInUser = localStorage.placemark;
     if (savedLoggedInUser) {
       const session = JSON.parse(savedLoggedInUser);
       loggedInUser.email = session.email;
@@ -148,6 +148,6 @@ export const placemarkService = {
     loggedInUser.name = "";
     loggedInUser.token = "";
     loggedInUser._id = "";
-    localStorage.removeItem("donation");
+    localStorage.removeItem("placemark");
   },
 }

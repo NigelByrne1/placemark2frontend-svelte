@@ -1,5 +1,11 @@
 <script lang="ts">
   import { currentPlacemarks, currentCategorys, currentUsers } from "$lib/runes.svelte";
+  import DOMPurify from "dompurify";
+  
+  function sanitize(html: string) {
+  return DOMPurify.sanitize(html);
+}
+
 </script>
 
 <table class="table is-fullwidth">
@@ -16,8 +22,8 @@
   <tbody>
     {#each currentPlacemarks.placemarks as placemark}
       <tr>
-        <td>{placemark.name}</td>
-        <td>{placemark.description}</td>
+        <td>{@html sanitize(placemark.name)}</td>
+        <td>{@html sanitize(placemark.description)}</td>
         <td>{placemark.latitude}</td>
         <td>{placemark.longitude}</td>
         <td>

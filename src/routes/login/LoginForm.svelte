@@ -5,9 +5,11 @@
   import Message from "$lib/ui/Message.svelte";
   import UserCredentials from "$lib/ui/UserCredentials.svelte";
 
+
   let email = $state("");
   let password = $state("");
   let message = $state("");
+
 
   async function login() {
     console.log(`attempting to log in email: ${email} with password: ${password}`);

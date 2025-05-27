@@ -3,6 +3,7 @@
   import { placemarkService } from "$lib/services/placemark-service";
   import type { Placemark, Category } from "$lib/types/placemark-types";
   import Coordinates from "$lib/ui/Coordinates.svelte";
+  import DOMPurify from "dompurify";
 
   let name = $state("");
   let description = $state("");
@@ -31,7 +32,7 @@
 
     if (creatingNew) {
       const newCategory: Category = {
-        title: newCategoryTitle.trim(),
+        title: DOMPurify.sanitize(newCategoryTitle.trim()),
         userid: loggedInUser._id
       };
 
@@ -55,8 +56,8 @@
     }
 
     const placemark: Placemark = {
-      name,
-      description,
+      name: DOMPurify.sanitize(name),
+      description: DOMPurify.sanitize(description),
       latitude: lat,
       longitude: lng,
       categoryid: categoryId

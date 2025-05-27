@@ -8,7 +8,7 @@
   loggedInUser.token = "";
   loggedInUser._id = "";
   if (browser) {
-  localStorage.removeItem("donation");
+  localStorage.removeItem("placemark");
   }
   goto("/");
 </script>
