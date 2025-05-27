@@ -5,8 +5,8 @@ import { computeByCategory, computeByUser } from "./placemark-utils";
 
 
 export const placemarkService = {
-  baseUrl: "http://localhost:3000",
-
+  // baseUrl: "http://localhost:3000",
+  baseUrl: "https://excited-sugar-cheque.glitch.me",
 
   async signup(user: User): Promise<boolean> {
     try {
