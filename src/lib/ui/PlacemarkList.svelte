@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { placemarks, categories } = $props();
+  import { currentPlacemarks, currentCategorys } from "$lib/runes.svelte";
 </script>
 
 <table class="table is-fullwidth">
@@ -13,20 +13,18 @@
     </tr>
   </thead>
   <tbody>
-    {#each placemarks as placemark}
+    {#each currentPlacemarks.placemarks as placemark}
       <tr>
         <td>{placemark.name}</td>
         <td>{placemark.description}</td>
         <td>{placemark.latitude}</td>
         <td>{placemark.longitude}</td>
         <td>
-          {#if categories}
-            {#each categories as category}
-              {#if category._id === placemark.categoryid}
-                {category.title}
-              {/if}
-            {/each}
-          {/if}
+          {#each currentCategorys.categorys as category}
+            {#if category._id === placemark.categoryid}
+              {category.title}
+            {/if}
+          {/each}
         </td>
       </tr>
     {/each}

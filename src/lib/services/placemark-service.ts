@@ -1,5 +1,7 @@
 import axios from "axios";
 import type { Session, User, Category, Placemark } from "$lib/types/placemark-types"
+import { loggedInUser, currentPlacemarks, currentCategorys } from "$lib/runes.svelte";
+
 
 export const placemarkService = {
   baseUrl: "http://localhost:3000",
@@ -8,16 +10,19 @@ export const placemarkService = {
   async signup(user: User): Promise<boolean> {
     try {
       const response = await axios.post(`${this.baseUrl}/api/users`, user);
-      return response.data.success === true;
+      return response.status >= 200 && response.status < 300;
     } catch (error) {
-      console.log(error);
+      console.log("Signup error:", error);
       return false;
     }
   },
 
   async login(email: string, password: string): Promise<Session | null> {
     try {
-      const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+      const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
+        email,
+        password
+      });
       if (response.data.success) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
         const session: Session = {
@@ -25,6 +30,8 @@ export const placemarkService = {
           token: response.data.token,
           _id: response.data._id
         };
+        this.saveSession(session, email);
+        await this.refreshPlacemarkInfo();
         return session;
       }
       return null;
@@ -47,15 +54,30 @@ export const placemarkService = {
   },
 
   async addPlacemark(categoryId: string, placemark: Placemark, token: string): Promise<boolean> {
-    try {
+  try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const response = await axios.post(`${this.baseUrl}/api/categorys/${categoryId}/placemarks`, placemark);
-      return response.status >= 200 && response.status < 300;
+      if (response.status >= 200 && response.status < 300) {
+        await this.refreshPlacemarkInfo(); 
+        return true;
+      }
+      return false;
     } catch (e) {
       console.log("error adding placemark:", e);
       return false;
-    }
-},
+  }
+  },
+
+  async addCategory(category: Category, token: string): Promise<boolean> {
+  try {
+    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    const response = await axios.post(`${this.baseUrl}/api/categorys`, category);
+    return response.status >= 200 && response.status < 300;
+  } catch (e) {
+    console.log("error adding category:", e);
+    return false;
+  }
+  },
 
   async getPlacemarks(token: string): Promise<Placemark[]> {
     try {
@@ -66,5 +88,44 @@ export const placemarkService = {
       console.log("error fetching placemarks:", e);
       return [];
     }
-  }
-};
+  },
+
+  async refreshPlacemarkInfo() {
+    if (loggedInUser.token) {
+      console.log(" Fetching updated placemarks and categorys...");
+      currentPlacemarks.placemarks = await this.getPlacemarks(loggedInUser.token);
+      currentCategorys.categorys = await this.getCategorys(loggedInUser.token);
+      console.log(" Categories:", currentCategorys.categorys);
+    }
+  },
+
+  saveSession(session: Session, email: string) {
+    loggedInUser.email = email;
+    loggedInUser.name = session.name;
+    loggedInUser.token = session.token;
+    loggedInUser._id = session._id;
+    localStorage.donation = JSON.stringify(loggedInUser);
+  },
+
+  async restoreSession() {
+    const savedLoggedInUser = localStorage.donation;
+    if (savedLoggedInUser) {
+      const session = JSON.parse(savedLoggedInUser);
+      loggedInUser.email = session.email;
+      loggedInUser.name = session.name;
+      loggedInUser.token = session.token;
+      loggedInUser._id = session._id;
+    }
+    await this.refreshPlacemarkInfo();
+  },
+
+  clearSession() {
+    currentPlacemarks.placemarks = [];
+    currentCategorys.categorys = [];
+    loggedInUser.email = "";
+    loggedInUser.name = "";
+    loggedInUser.token = "";
+    loggedInUser._id = "";
+    localStorage.removeItem("donation");
+  },
+}

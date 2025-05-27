@@ -5,3 +5,5 @@ export const loggedInUser = $state({
     token: "",
     _id: ""
  });
+export const currentPlacemarks = $state({ placemarks: [] });
+export const currentCategorys = $state({ categorys: [] });

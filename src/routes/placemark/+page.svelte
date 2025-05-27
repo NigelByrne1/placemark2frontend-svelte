@@ -1,20 +1,31 @@
 <script lang="ts">
-  import { subTitle, loggedInUser } from "$lib/runes.svelte";
+  import { loggedInUser, subTitle } from "$lib/runes.svelte";
   import { placemarkService } from "$lib/services/placemark-service";
   import Card from "$lib/ui/Card.svelte";
-  import PlacemarkForm from "./PlacemarkForm.svelte";
-  import type { Category } from "$lib/types/placemark-types";
   import { onMount } from "svelte";
+  import PlacemarkForm from "./PlacemarkForm.svelte";
+  import PlacemarkList from "$lib/ui/PlacemarkList.svelte";
 
-  subTitle.text = "Add a Placemark";
+  subTitle.text = "Add and View Placemarks";
 
-  let categoryList: Category[] = [];
+  let categoryList = [];
+  let placemarks = [];
 
   onMount(async () => {
     categoryList = await placemarkService.getCategorys(loggedInUser.token);
+    placemarks = await placemarkService.getPlacemarks(loggedInUser.token);
   });
 </script>
 
-<Card title="Please Add a Placemark">
-  <PlacemarkForm {categoryList} />
-</Card>
+<div class="columns">
+  <div class="column">
+    <Card title="Placemarks to Date">
+      <PlacemarkList {placemarks} {categoryList} />
+    </Card>
+  </div>
+  <div class="column">
+    <Card title="Please Add a Placemark">
+      <PlacemarkForm {categoryList} />
+    </Card>
+  </div>
+</div>
