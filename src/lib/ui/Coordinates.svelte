@@ -2,7 +2,7 @@
   let { lat = $bindable(0.0), lng = $bindable(0.0) } = $props();
 </script>
 
-<div class="has-background-pink">
+<div class="has-background-white">
     <div class="box field is-horizontal">
         <div class="field-label is-normal">
             <label for="lng" class="label">Lng</label>

@@ -2,7 +2,7 @@
   import { loggedInUser } from "$lib/runes.svelte";
 </script>
 
-<nav class="navbar is-full-width is-danger has-text-white">
+<nav class="navbar is-full-width is-danger">
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/placemark">
@@ -10,7 +10,7 @@
         <span><strong>Placemark</strong> </span>
       </a>
     </div>
-    <div id="navbarMenu" class="navbar-menu">
+    <div id="navbarMenu" class="navbar-menu has-text-white">
       <div class="navbar-end">
         <a class="navbar-item" href="/"> Place </a>
         <a class="navbar-item" href="/report"> Report </a>

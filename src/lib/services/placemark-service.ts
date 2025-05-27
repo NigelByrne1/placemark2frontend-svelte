@@ -35,33 +35,35 @@ export const placemarkService = {
   },
 
 
-   async getCategories(): Promise<Category[]> {
+  async getCategorys(token: string): Promise<Category[]> {
     try {
-      const response = await axios.get(`${this.baseUrl}/api/categories`);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.get(this.baseUrl + "/api/categorys");
       return response.data;
     } catch (e) {
-      console.log(e);
+      console.log("error fetching categorys:", e);
       return [];
     }
   },
 
-  async addPlacemark(categoryId: string, placemark: Placemark): Promise<boolean> {
+  async addPlacemark(categoryId: string, placemark: Placemark, token: string): Promise<boolean> {
     try {
-      const response = await axios.post(`${this.baseUrl}/api/categories/${categoryId}/placemarks`, placemark);
-      return response.status === 200;
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.post(`${this.baseUrl}/api/categorys/${categoryId}/placemarks`, placemark);
+      return response.status >= 200 && response.status < 300;
     } catch (e) {
-      console.log(e);
+      console.log("error adding placemark:", e);
       return false;
     }
-  },
+},
 
-  async getPlacemarks(): Promise<Placemark[]> {
+  async getPlacemarks(token: string): Promise<Placemark[]> {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const response = await axios.get(`${this.baseUrl}/api/placemarks`);
       return response.data;
     } catch (e) {
-      console.log(e);
+      console.log("error fetching placemarks:", e);
       return [];
     }
   }
